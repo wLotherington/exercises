@@ -1,0 +1,1 @@
+The %{adj} %{adj} %{noun} %{adv} %{verb} the %{adj} %{adj} %{noun}, who %{adv} %{verb} his %{noun} and %{verb} around.
