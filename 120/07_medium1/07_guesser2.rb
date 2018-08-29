@@ -1,28 +1,11 @@
-# understand
-#   create calss for a number guessing game
-#   guess numbers between 1 and 100
-#   limit guesses to 7
-
-# The number guessing games consists of a player trying to guess a randomly generated integer.
-# The player has 7 attempts to guess the number.
-# The number will be between 1 and 100 (inclusive)
-# The game will provide feedback if the guess was too high or too low.
-
-# nouns
-#   game
-#   player
-#   - guess
-#   random number
-
 class GuessingGame
-  LOW = 1
-  HIGH = 100
-  GUESSES = 7
-
-  def initialize
+  def initialize(low = 1, high = 100)
     @random_number = nil
     @guesses = 0
     @player_guess = nil
+    @low = low
+    @high = high
+    @max_guesses = calculate_guesses
   end
 
   def play
@@ -36,12 +19,16 @@ class GuessingGame
     display_results
   end
 
+  def calculate_guesses
+    @max_guesses = Math.log2(@high - @low).to_i + 1
+  end
+
   def reset
     @guesses = 0
   end
 
   def generate_random_number
-    @random_number = rand(LOW..HIGH)
+    @random_number = rand(@low..@high)
   end
 
   def player_turn
@@ -51,15 +38,15 @@ class GuessingGame
   end
 
   def display_remaining_guesses
-    puts "You have #{GUESSES - @guesses} guesses remaining."
+    puts "You have #{@max_guesses - @guesses} guesses remaining."
   end
 
   def prompt_player_guess
-    print "Enter a number between #{LOW} and #{HIGH}: "
+    print "Enter a number between #{@low} and #{@high}: "
     loop do
       @player_guess = gets.chomp.to_i
-      break if (LOW..HIGH).include? @player_guess
-      print "Invalud guess. Enter a number between #{LOW} and #{HIGH}: "
+      break if (@low..@high).include? @player_guess
+      print "Invalud guess. Enter a number between #{@low} and #{@high}: "
     end
   end
 
@@ -72,7 +59,7 @@ class GuessingGame
   end
 
   def out_of_guesses?
-    @guesses == GUESSES
+    @guesses == @max_guesses
   end
 
   def display_feedback
@@ -91,5 +78,5 @@ class GuessingGame
   end
 end
 
-game = GuessingGame.new
+game = GuessingGame.new(501, 1500)
 game.play
