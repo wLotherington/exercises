@@ -32,7 +32,7 @@ class TestBool < Minitest::Test
     assert_equal(true, @list.include?('xyz'))
   end
 
-  def test_numeric
+  def test_num eric
     assert_instance_of(Integer, @value)
   end
 
