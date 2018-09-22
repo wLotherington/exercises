@@ -1,10 +1,12 @@
 class Octal
   def initialize(octal)
-    @digits = octal.to_i.digits
+    @digits = octal.match(/[^0-7]/) ? [0] : octal.to_i.digits
   end
 
   def to_decimal
-    return 0 if @digits.max >= 8
     @digits.map.with_index { |digit, idx| digit * 8**idx }.sum
   end
 end
+
+p Octal.new('123z').to_decimal
+p Octal.new('123').to_decimal
